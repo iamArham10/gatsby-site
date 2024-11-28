@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, graphql } from "gatsby";
-import SEO from "../components/seo";
+import SEO from "../src/components/seo.js";
 
 const HomePage = ({ data }) => {
   const posts = data.allMarkdownRemark.edges;
