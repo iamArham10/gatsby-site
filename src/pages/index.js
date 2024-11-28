@@ -1,11 +1,16 @@
 import React from "react";
 import { Link, graphql } from "gatsby";
+import SEO from "../components/seo";
 
 const HomePage = ({ data }) => {
   const posts = data.allMarkdownRemark.edges;
 
   return (
     <main>
+      <SEO
+        title="Home"
+        description="This is a homepage of our Gatsby site. Optimized for SEO"
+      />
       <h1>Welcome to my Gatsby site!</h1>
       <p>This is a homepage of our Gatsby site.</p>
       <ul>
