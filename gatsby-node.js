@@ -1,18 +1,34 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/
- */
+const path = require("path");
 
-/**
- * @type {import('gatsby').GatsbyNode['createPages']}
- */
-exports.createPages = async ({ actions }) => {
-  const { createPage } = actions
-  createPage({
-    path: "/using-dsg",
-    component: require.resolve("./src/templates/using-dsg.js"),
-    context: {},
-    defer: true,
-  })
-}
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions;
+
+  const blogPostTemplate = path.resolve("./src/templates/blog-post.js");
+
+  const result = await graphql(`
+    {
+      allMarkdownRemark {
+        edges {
+          node {
+            id
+          }
+        }
+      }
+    }
+  `);
+
+  if (result.errors) {
+    throw result.errors;
+  }
+
+  result.data.allMarkdownRemark.edges.forEach(({ node }) => {
+    console.log(`Creating page for ${node.id}`); // Add logging
+    createPage({
+      path: `/posts/${node.id}`,
+      component: blogPostTemplate,
+      context: {
+        id: node.id,
+      },
+    });
+  });
+};
