@@ -1,6 +1,6 @@
 import React from "react";
 import { graphql } from "gatsby";
-import SEO from "../components/SEO";
+import SEO from "../components/seo.js";
 
 const BlogPost = ({ data }) => {
   const post = data.markdownRemark;
